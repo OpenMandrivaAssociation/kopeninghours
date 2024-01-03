@@ -3,7 +3,7 @@
 Summary:	OSM opening hours expression parser and evaluator
 Name:		kopeninghours
 Version:	23.08.4
-Release:	2
+Release:	3
 Group:		Graphical desktop/KDE
 License:	LGPLv2+
 URL:		https://www.kde.org
