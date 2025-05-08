@@ -4,8 +4,8 @@
 %define stable %([ "$(echo %{version} |cut -d. -f3)" -ge 80 ] && echo -n un; echo -n stable)
 
 Summary:	OSM opening hours expression parser and evaluator
-Name:		plasma6-kopeninghours
-Version:	25.04.0
+Name:		kopeninghours
+Version:	25.04.1
 Release:	%{?git:0.%{git}.}1
 Group:		Graphical desktop/KDE
 License:	LGPLv2+
@@ -29,6 +29,14 @@ BuildRequires:	cmake(Qt6Qml)
 BuildRequires:	cmake(Qt6Test)
 BuildRequires:	pkgconfig(python)
 BuildRequires:	qt6-qttools-assistant
+
+BuildSystem:	cmake
+BuildOption:	-DKDE_INSTALL_USE_QT_SYS_PATHS:BOOL=ON
+BuildOption:	-DBUILD_TESTING:BOOL=OFF
+BuildOption:	-DQT_MAJOR_VERSION=6
+
+# Renamed after 6.0 2025-05-09
+%rename plasma6-kopeninghours
 
 %description
 A library for parsing and evaluating OSM opening hours expressions.
@@ -81,26 +89,11 @@ library.
 %package -n python-%{name}
 Summary:	Python3 bindings for %{name}
 Group:		Development/Python
+# Renamed after 6.0 2025-05-09
+%rename python-plasma6-kopeninghours
 
 %description -n python-%{name}
 Python bindings for %{name}.
 
 %files -n python-%{name}
 %{python_sitelib}/PyKOpeningHours
-
-#------------------------------------------------------------------------------
-
-%prep
-%autosetup -p1 -n kopeninghours-%{?git:%{gitbranchd}}%{!?git:%{version}}
-%cmake \
-	-DKDE_INSTALL_USE_QT_SYS_PATHS:BOOL=ON \
-	-DQT_MAJOR_VERSION=6 \
-	-G Ninja -DBUILD_TESTING=OFF
-
-%build
-%ninja_build -C build
-
-%install
-%ninja_install -C build
-
-%find_lang kopeninghours --with-man
