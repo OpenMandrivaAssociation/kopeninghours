@@ -66,11 +66,14 @@ A library for parsing and evaluating OSM opening hours expressions.
 
 #------------------------------------------------------------------------------
 %define develname %mklibname %{name} -d
+# Renamed after 6.0 2025-07-18
+%define olddevelname %mklibname plasma6-%{name} -d
 
 %package -n %{develname}
 Summary:	Development files for %{name}
 Group:		Development/KDE and Qt
 Requires:	%{libname} = %{EVRD}
+%rename %{olddevelname}
 
 %description -n %{develname}
 Include files and libraries needed to build programs that use the KOpeningHours
